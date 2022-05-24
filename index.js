@@ -9,8 +9,8 @@ app.use(bparser.json());
 
 
 
-import charcterRoute from './controllers/userInter.js';
-app.use('/usersInter', charcterRoute);
+import charcterRoute from './controllers/userInter';
+app.use('/userInter', charcterRoute);
 
 
 const port = 3005;
