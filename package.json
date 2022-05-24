@@ -1,0 +1,19 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "Project Semester 2 js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nehoraiharush/Project.git"
+  },
+  "author": "Nehorai Harush",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nehoraiharush/Project/issues"
+  },
+  "homepage": "https://github.com/nehoraiharush/Project#readme"
+}
