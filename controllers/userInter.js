@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 const router = express.Router();
 import jwt from 'jsonwebtoken';
 import users from '../models/users.js'
-import auth from '../auth.js'
 
 router.post('/signUp', async (req, res) => {
     const { fName, lName, userEmail, userPassword } = req.body;
@@ -84,13 +83,13 @@ router.put('/verify', async (req, res) => {
 //asking for a user email and sending a passcode
 router.put('/forgetPassword', async (req, res) => {
 
-    const email = req.body;
-    const user = await users.findAll({ where: { userEmail: email } });
+    const { userEmail } = req.body;
+    const user = await users.findAll({ where: { userEmail: userEmail } });
 
     if (user.length > 0) {//find a user
-
-        user[0].isAuthorized = false;//user not authorized antmore
         user[0].passCode = Math.floor(Math.random() * 8999) + 1000;//new passcode between 1000-9999
+        user[0].isAuthorized = false;//user not authorized antmore
+
         user[0].save();
 
         return res.status(200).json({

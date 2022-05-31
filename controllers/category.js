@@ -2,7 +2,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 const router = express.Router();
 import jwt from 'jsonwebtoken';
-import categorys from '../models/categoty.js'
+import categorys from '../models/category.js'
 import auth from '../auth.js'
 
 //the function checks if the name is empty and if not adds to the database and returns the id

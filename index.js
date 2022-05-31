@@ -13,8 +13,8 @@ app.use('/userInter', charcterRoute);
 import ProductRoute from './controllers/product.js';
 app.use('/product', ProductRoute)
 
-import CategoryRoute from './controllers/categoty.js'
-app.use('/categoty', CategoryRoute)
+import CategoryRoute from './controllers/category.js'
+app.use('/category', CategoryRoute)
 
 const port = 3000;
 database.sync()
