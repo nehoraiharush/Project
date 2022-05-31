@@ -1,5 +1,4 @@
 import Sequelize from 'sequelize'
-import sequelize from '../database/database.js'
 import database from '../database/database.js'
 
 const User = database.define('User', {
@@ -14,9 +13,6 @@ const User = database.define('User', {
     userEmail: Sequelize.STRING,
     userPassword: Sequelize.STRING,
     userPasscode: Sequelize.INTEGER,
-    isAuthorized: {
-        type: Sequelize.BOOLEAN,
-        default: false
-    }
+    isAuthorized: Sequelize.BOOLEAN
 });
 export default User;

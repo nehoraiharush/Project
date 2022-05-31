@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize'
-import sequelize from '../database/database'
-import database from '../database/database'
+import sequelize from '../database/database.js'
+import database from '../database/database.js'
 
-const catrgoty = database.define('categoty', {
+const categoty = database.define('categoty', {
 
     id: {
         type: Sequelize.INTEGER,

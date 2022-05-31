@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize'
-import sequelize from '../database/database'
-import database from '../database/database'
+import sequelize from '../database/database.js'
+import database from '../database/database.js'
 
 const Product = database.define('product', {
 
@@ -16,7 +16,7 @@ const Product = database.define('product', {
     createTime: Sequelize.TIME,
     price: Sequelize.INTEGER,
     imageUrl: Sequelize.STRING,
-    unitsInStock: Sequelize.IINTEGER
+    unitsInStock: Sequelize.INTEGER
 });
 
 export default Product;
