@@ -2,7 +2,7 @@ import Sequelize from 'sequelize'
 import sequelize from '../database/database'
 import database from '../database/database'
 
-const Product = database.define('product', {
+const catrgoty = database.define('categoty', {
 
     id: {
         type: Sequelize.INTEGER,
@@ -11,12 +11,6 @@ const Product = database.define('product', {
         autoIncrement: true
     },
     name: Sequelize.STRING,
-    description: Sequelize.STRING,
-    category: Sequelize.INTEGER,
-    createTime: Sequelize.TIME,
-    price: Sequelize.INTEGER,
-    imageUrl: Sequelize.STRING,
-    unitsInStock: Sequelize.IINTEGER
 });
 
-export default Product;
+export default categoty;

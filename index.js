@@ -4,16 +4,16 @@ const app = express();
 
 
 
-app.use(bparser.urlencoded());
+app.use(bparser.urlencoded({ extended: false }));
 app.use(bparser.json());
 
 
 
-import charcterRoute from './controllers/userInter';
+import charcterRoute from './controllers/userInter.js'
 app.use('/userInter', charcterRoute);
 
 
-const port = 3005;
+const port = 3000;
 app.listen(port, function () {
     console.log(`${port} Working good!!!`);
 })
