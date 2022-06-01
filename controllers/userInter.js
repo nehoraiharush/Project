@@ -87,14 +87,14 @@ router.put('/forgetPassword', async (req, res) => {
     const user = await users.findAll({ where: { userEmail: userEmail } });
 
     if (user.length > 0) {//find a user
-        user[0].passCode = Math.floor(Math.random() * 8999) + 1000;//new passcode between 1000-9999
+        user[0].userPasscode = Math.floor(Math.random() * 8999) + 1000;//new passcode between 1000-9999
         user[0].isAuthorized = false;//user not authorized antmore
 
         user[0].save();
 
         return res.status(200).json({
             status: true,
-            message: `Passcode ${user[0].passCode}`
+            message: `Passcode ${user[0].userPasscode}`
         });
     } else {//didn't find
         return res.status(201).json({
