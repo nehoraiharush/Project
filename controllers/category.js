@@ -7,6 +7,7 @@ import auth from '../auth.js'
 
 //the function checks if the name is empty and if not adds to the database and returns the id
 router.post('/addCategoty', auth, async (req, res) => {
+    console.log('authorized')
     const { categoryName } = req.body
     if (categoryName == '') {
         return res.status(201).json({
