@@ -20,8 +20,9 @@ router.post('/addCategoty', auth, async (req, res) => {
         const categoryExists = await categorys.findAll({where: {name: categoryName}})
         if(categoryExists.length > 0){
             console.log('the name is alredy exists')
+            console.log(categoryExists)
             return res.status(201).json({
-                massage:"Error: the category is alredy exists"
+                massage:`Error: the category is alredy exists\nthe id of the category is:${categoryExists[0].id}`
             })
         }
         //everything is ok we can create the category
@@ -49,6 +50,42 @@ router.post('/addCategoty', auth, async (req, res) => {
 
 })
 
-
+//the function checks if the categoty id is existant, if yes it removes it
+router.delete('/removeCategory', auth, async (req,res) => {
+    try{
+        const{categoryId} = req.body
+        const category = await categorys.findAll({where: {id: categoryId}})
+        if(category.length > 0){
+            console.log('find')
+            category[0].destroy()
+            //deleted succsesfuly
+            .then(category => {
+                return res.status(200).json({
+                    massage: 'deleted succsesfuly'
+                })
+            })
+            //error in the deleting
+            .catch(err=>{
+                return res.status(500).json({
+                    error: err
+                })
+            })
+        }
+        //didnt find the category
+        else{
+            console.log('didnt find')
+            return res.status(201).json({
+                massage: 'Error: cant find the categoty'
+            })
+        }
+    }
+    //error in the fields
+    catch{
+        console.log('Error with the fields')
+        return res.status(201).json({
+            massage: "Error: the one field or more are broken or not existant"
+        })
+    }
+})
 
 export default router;
