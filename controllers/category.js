@@ -52,6 +52,7 @@ router.post('/addCategoty', auth, async (req, res) => {
 
 //the function checks if the categoty id is existant, if yes it removes it
 router.delete('/removeCategory', auth, async (req,res) => {
+    //try to prevernt
     try{
         const{categoryId} = req.body
         const category = await categorys.findAll({where: {id: categoryId}})
@@ -80,6 +81,29 @@ router.delete('/removeCategory', auth, async (req,res) => {
         }
     }
     //error in the fields
+    catch{
+        console.log('Error with the fields')
+        return res.status(201).json({
+            massage: "Error: the one field or more are broken or not existant"
+        })
+    }
+})
+
+router.get('/findById', async (req,res) => {
+    //the try catch is to prevet the faling of the server
+    try{
+        const{categoryId} = req.body
+        const category = await categorys.findAll({where: {id: categoryId}})
+        if(category.length > 0){
+            return res.status(200).json(category)
+        }
+        else{
+            return res.status(201).json({
+                massage: "Error: the catrgoty dont exists"
+            })
+        }
+    }
+    //error with the fields
     catch{
         console.log('Error with the fields')
         return res.status(201).json({
