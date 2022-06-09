@@ -89,13 +89,14 @@ router.delete('/removeCategory', auth, async (req,res) => {
     }
 })
 
+//the function is returning the category by the id if it exists
 router.get('/findById', async (req,res) => {
     //the try catch is to prevet the faling of the server
     try{
         const{categoryId} = req.body
         const category = await categorys.findAll({where: {id: categoryId}})
         if(category.length > 0){
-            return res.status(200).json(category)
+            return res.status(200).json(category[0])
         }
         else{
             return res.status(201).json({
@@ -110,6 +111,12 @@ router.get('/findById', async (req,res) => {
             massage: "Error: the one field or more are broken or not existant"
         })
     }
+})
+
+//gives all that the categorys have
+router.get('/findAll', async (req,res) => {
+    const category = await categorys.findAll()
+    return res.status(200).json(category)
 })
 
 export default router;
