@@ -119,4 +119,38 @@ router.get('/findAll', async (req,res) => {
     return res.status(200).json(category)
 })
 
+router.put('/updateCategory', auth, async(req,res) => {
+    //try catch because there could be problem with the fields
+    try{
+        const {categoryId, newCategoryName} = req.body
+        const category = await categorys.findAll({where: {id: categoryId}})
+        console.log(category)
+        if(category.length > 0){
+            category[0].update({
+                id: categoryId,
+                name: newCategoryName
+            })
+            .then(categoty =>{
+                return res.status(200).json(category)
+            })
+            .catch(err =>{
+                error: err
+            })
+        }
+        //no category found
+        else{
+            return res.status(201).json({
+                massage: "Error: the category isnt found"
+            })
+        }
+    }
+    //error with the categoty
+    catch{
+        console.log('Error with the fields')
+        return res.status(201).json({
+            massage: "Error: the one field or more are broken or not existant"
+        })
+    }
+})
+
 export default router;
