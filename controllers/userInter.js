@@ -55,7 +55,7 @@ router.post('/login', async (req, res) => {
                     last_name: user.lName,
                     email: user.userEmail,
                     passcode: user.userPasscode,
-                    data_password: user.password,
+                    data_password: user.userPassword,
                     userId: user.id
                 };
 
