@@ -143,8 +143,9 @@ router.put('/changePassword', async (req, res) => {
 
         const user = await users.findAll({ where: { id: entered_id } })
         if (user.length > 0) {
-            user[0].userPassword = bcrypt.hash(password);
+            user[0].userPassword = await bcrypt.hash(password, 10);
             user[0].save();
+            console.log(password, "   ", user[0].userPassword);
             return res.status(200).json({
                 message: "Password updated successfully"
             });
