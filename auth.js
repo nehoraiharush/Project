@@ -2,8 +2,13 @@ import jwt from 'jsonwebtoken';
 
 const auth = async (req, res, next) => {
     console.log('trying to auth')
-    const bearerHeader = req.headers['authorization'];
+    //we need to check if the header is not empty to prevert a non string varuble calling the aplit function
+    const bearerHeader = String(req.headers['authorization']);
+    if(bearerHeader == ''){
+        return res.sendStatus(403);
+    }
     console.log('got authorization from the request')
+    //this line can crush if the token is empty!
     const token = bearerHeader.split(' ')[1];
 
     try{
