@@ -9,7 +9,7 @@ import users from '../models/users.js'
 //I added a try catch to every function to fix bug, more on that in the commit
 
 router.post('/signUp', async (req, res) => {
-    try{
+    try {
         const { fName, lName, userEmail, userPassword } = req.body;
         console.log(userEmail);
         const email_exist = await users.findAll({ where: { userEmail: userEmail } });
@@ -34,7 +34,7 @@ router.post('/signUp', async (req, res) => {
             message: "User added successfully"
         });
     }
-    catch{
+    catch {
         console.log('Error with the fields')
         return res.status(201).json({
             massage: "Error: the one field or more are broken or not existant"
@@ -43,7 +43,7 @@ router.post('/signUp', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    try{
+    try {
         const { userEmail, userPassword } = req.body;
         const user_find = await users.findAll({ where: { userEmail: userEmail } });
         if (user_find.length > 0) {
@@ -55,7 +55,7 @@ router.post('/login', async (req, res) => {
                     last_name: user.lName,
                     email: user.userEmail,
                     passcode: user.userPasscode,
-                    data_password: user.password,
+                    data_password: user.userPassword,
                     userId: user.id
                 };
 
@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
             });
         }
     }
-    catch{
+    catch {
         console.log('Error with the fields')
         return res.status(201).json({
             massage: "Error: the one field or more are broken or not existant"
@@ -82,7 +82,7 @@ router.post('/login', async (req, res) => {
 
 //vierfying the user
 router.put('/verify', async (req, res) => {
-    try{
+    try {
         const { userEmail, userPasscode } = req.body;
         //serchig for user with the above details
         const user = await users.findAll({ where: { userEmail: userEmail } && { userPasscode: userPasscode } });
@@ -100,7 +100,7 @@ router.put('/verify', async (req, res) => {
             });
         }
     }
-    catch{
+    catch {
         console.log('Error with the fields')
         return res.status(201).json({
             massage: "Error: the one field or more are broken or not existant"
@@ -109,7 +109,7 @@ router.put('/verify', async (req, res) => {
 })
 //asking for a user email and sending a passcode
 router.put('/forgetPassword', async (req, res) => {
-        try{
+    try {
         const { userEmail } = req.body;
         const user = await users.findAll({ where: { userEmail: userEmail } });
 
@@ -130,7 +130,7 @@ router.put('/forgetPassword', async (req, res) => {
             })
         }
     }
-    catch{
+    catch {
         console.log('Error with the fields')
         return res.status(201).json({
             massage: "Error: the one field or more are broken or not existant"
@@ -138,7 +138,7 @@ router.put('/forgetPassword', async (req, res) => {
     }
 })
 router.put('changePassword', async (req, res) => {
-        try{
+    try {
         const { entered_id, password } = req.body;
 
         const user = await users.findAll({ where: { id: entered_id } })
@@ -154,7 +154,7 @@ router.put('changePassword', async (req, res) => {
             });
         }
     }
-    catch{
+    catch {
         console.log('Error with the fields')
         return res.status(201).json({
             massage: "Error: the one field or more are broken or not existant"
