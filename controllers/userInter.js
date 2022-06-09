@@ -137,7 +137,7 @@ router.put('/forgetPassword', async (req, res) => {
         })
     }
 })
-router.put('changePassword', async (req, res) => {
+router.put('/changePassword', async (req, res) => {
     try {
         const { entered_id, password } = req.body;
 
