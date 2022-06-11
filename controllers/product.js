@@ -4,6 +4,7 @@ const router = express.Router();
 import jwt from 'jsonwebtoken';
 import products from '../models/product.js'
 import auth from '../auth.js'
+import checkCategoryId from '../checkCategoryId.js';
 
 //the function checks the given values for emptyness or double uses, if no error found adds a new product
 router.post('/addProduct', auth, async (req, res) => {
@@ -27,11 +28,8 @@ router.post('/addProduct', auth, async (req, res) => {
                 massage:"Error: cant add a zero or negivite amount of items"
             })
         }
-        //checking the category by sending a request to the category unit, if the category id is legal will be response 200 if not will be respose 201
-        const categoryCheckUrl = 'localhost:3000/category/findAll'
-        const response = await fetch(categoryCheckUrl,{method: "GET"})
-        console.log(req.body)
-        if(response.status != 200){
+        const categoryExists = checkCategoryId(category)
+        if(!categoryExists){
             return res.status(201).json({
                 massage: "Error: the category id is illigal"
             })
