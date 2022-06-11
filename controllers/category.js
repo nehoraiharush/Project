@@ -4,6 +4,8 @@ const router = express.Router();
 import jwt from 'jsonwebtoken';
 import categorys from '../models/category.js'
 import auth from '../auth.js'
+import categorycheck from '../checkCategoryId.js'
+import checkCategoryId from '../checkCategoryId.js';
 
 //the function checks if the name is empty and if not adds to the database and returns the id
 router.post('/addCategoty', auth, async (req, res) => {
@@ -55,10 +57,10 @@ router.delete('/removeCategory', auth, async (req,res) => {
     //try to prevernt
     try{
         const{categoryId} = req.body
-        const category = await categorys.findAll({where: {id: categoryId}})
-        if(category.length > 0){
+        const category = await checkCategoryId(categoryId)
+        if(category){
             console.log('find')
-            category[0].destroy()
+            category.destroy()
             //deleted succsesfuly
             .then(category => {
                 return res.status(200).json({
@@ -94,9 +96,9 @@ router.get('/findById', async (req,res) => {
     //the try catch is to prevet the faling of the server
     try{
         const{categoryId} = req.body
-        const category = await categorys.findAll({where: {id: categoryId}})
-        if(category.length > 0){
-            return res.status(200).json(category[0])
+        const category = await categorycheck(categoryId)
+        if(category != null){
+            return res.status(200).json(category)
         }
         else{
             return res.status(201).json({
@@ -123,7 +125,22 @@ router.put('/updateCategory', auth, async(req,res) => {
     //try catch because there could be problem with the fields
     try{
         const {categoryId, newCategoryName} = req.body
-        const category = await categorys.findAll({where: {id: categoryId}})
+        //the name of the category cannot be empty
+        if(newCategoryName == ''){
+            return res.status(201).json({
+                massage: "error: the category name cant be empty"
+            })
+        }
+        //we need to check if the name is alredy existing
+        const categoryExists = await categorys.findAll({where: {name: categoryName}})
+        if(categoryExists.length > 0){
+            console.log('the name is alredy exists')
+            console.log(categoryExists)
+            return res.status(201).json({
+                massage:`Error: the category is alredy exists\nthe id of the category is:${categoryExists[0].id}`
+            })
+        }
+        const category = await checkCategoryId(categoryId)
         console.log(category)
         if(category.length > 0){
             category[0].update({
