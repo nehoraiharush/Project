@@ -96,4 +96,62 @@ router.delete('/remove', auth,async(req,res) =>{
     }
 })
 
+router.put('/update',auth,async(req,res) => {
+    //try catch to prevent failing if there is problem with the fields
+    try{
+        const {name, id, description, category, price, imageUrl, unitsInStock} = req.body
+        const item = await products.findAll({where: {id: id}})
+        console.log(item)
+        console.log(id)
+        if(item.length > 0){
+           //check the name
+            if(name == ''){
+                return res.status(201).json({
+                    massage: "Erorr: name of the product cant be empty"
+                })
+            }
+            //check the price
+            if(price <= 0){
+                return res.status(201).json({
+                    massage: "Error: the price cant be zero or negative"
+                })
+            }
+            if(unitsInStock <= 0){
+                return res.status(201).json({
+                    massage:"Error: cant add a zero or negivite amount of items"
+                })
+            }
+            item[0].update({
+                name: name,
+                description: description,
+                category: category,
+                price: price,
+                imageUrl: imageUrl,
+                unitsInStock: unitsInStock
+            })
+            .then(result =>{
+                return res.status(200).json(result)
+            })
+            //error with the updating
+            .catch(err => {
+                return res.status(201).json({
+                    error: err
+                })
+            })
+        }
+        //the item wanst found
+        else{
+            return res.status(201).json({
+                massage: "Error: the item wasnt found"
+            })
+        }
+    }
+    catch{
+        console.log('Error with the fields')
+        return res.status(201).json({
+            massage: "Error: the one field or more are broken or not existant"
+        })
+    }
+})
+
 export default router;
