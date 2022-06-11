@@ -13,7 +13,6 @@ const Product = database.define('product', {
     name: Sequelize.STRING,
     description: Sequelize.STRING,
     category: Sequelize.INTEGER,
-    createTime: Sequelize.TIME,
     price: Sequelize.INTEGER,
     imageUrl: Sequelize.STRING,
     unitsInStock: Sequelize.INTEGER
