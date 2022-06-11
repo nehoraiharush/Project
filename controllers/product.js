@@ -61,5 +61,39 @@ router.post('/addProduct', auth, async (req, res) => {
     }
 })
 
+//the function removes item by the given id
+router.delete('/remove', auth,async(req,res) =>{
+    //try catch to prevent accesing bad data
+    try{
+        const {id} = req.body
+        const item = await products.findAll({where: {id: id}})
+        if(item.length > 0){
+            item[0].destroy()
+            .then(() => {
+                return res.status(200).json({
+                    massage: "Item removed succsesfuly"
+                })
+            })
+            .catch(err => {
+                return res.status(201).json({
+                    error: err
+                })
+            })
+        }
+        //the item wasnt found
+        else{
+            return res.status(201).json({
+                massage: "Error: cant find the product"
+            })
+        }
+    }
+    //error with the field
+    catch{
+        console.log('Error with the fields')
+        return res.status(201).json({
+            massage: "Error: the one field or more are broken or not existant"
+        })
+    }
+})
 
 export default router;
