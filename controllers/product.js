@@ -154,4 +154,54 @@ router.put('/update',auth,async(req,res) => {
     }
 })
 
+router.get('/findById',async(req,res) => {
+    try{
+        const {id} = req.body
+        const item = await products.findAll({where: {id:id}})
+        if(item.length > 0){
+            return res.status(200).json(item[0])
+        }
+        //didnt find
+        else{
+            return res.status(201).json({
+                massage: "Error, cant find the item"
+            })
+        }
+    }
+    //there was problem with the field
+    catch{
+        console.log('Error with the fields')
+        return res.status(201).json({
+            massage: "Error: the one field or more are broken or not existant"
+        })
+    }
+})
+
+router.get('/findAll', async(req,res)=>{
+    try{
+        const items = await products.findAll()
+        return res.status(200).json(items)
+    }
+    //some error
+    catch{
+        return res.status(201).json({
+            massage:"Unknown error"
+        })
+    }
+})
+
+router.get('/findByCategory', async(req,res)=>{
+    try{
+        const {categoryId} = req.body
+        const items = await products.findAll({where: {category:categoryId}})
+        return res.status(200).json(items)
+    }
+    catch{
+        console.log('Error with the fields')
+        return res.status(201).json({
+            massage: "Error: the one field or more are broken or not existant"
+        })
+    }
+})
+
 export default router;
