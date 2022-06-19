@@ -1,5 +1,4 @@
 import express from 'express';
-import fetch from 'node-fetch';
 import bcrypt from 'bcryptjs';
 const router = express.Router();
 import jwt from 'jsonwebtoken';
